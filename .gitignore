@@ -38,3 +38,4 @@ yarn-error.log*
 
 # Screenshots (if you don't want to commit them)
 # screenshots/
+.vercel

@@ -13,8 +13,8 @@ const CONFIG = {
 
     // vCard data
     vcard: {
-        firstName: 'Micro',
-        lastName: 'System',
+        firstName: 'Anil',
+        lastName: 'Jani',
         organization: 'Micro System',
         title: 'Founder & Owner',
         workPhone: '+89 0987-2345-09',
@@ -63,6 +63,20 @@ window.addEventListener('beforeinstallprompt', (e) => {
     // Show install prompt immediately when page loads
     if (!localStorage.getItem('installDismissed')) {
         elements.installPrompt.classList.add('active');
+    }
+});
+
+// Detect iOS specifically
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+// Handle iOS Initial Prompt
+window.addEventListener('load', () => {
+    if (isIOS && !window.matchMedia('(display-mode: standalone)').matches) {
+        if (!localStorage.getItem('installDismissed')) {
+            elements.installPrompt.classList.add('active');
+            const installBtn = document.getElementById('installBtn');
+            if (installBtn) installBtn.textContent = 'How to Install?';
+        }
     }
 });
 
@@ -156,11 +170,14 @@ function showQRCode() {
     // Clear previous QR code
     elements.qrCode.innerHTML = '';
 
+    // Calculate responsive size (max 256, min 160)
+    const size = Math.min(256, Math.max(160, window.innerWidth - 140));
+
     // Generate new QR code
     new QRCode(elements.qrCode, {
         text: CONFIG.website,
-        width: 256,
-        height: 256,
+        width: size,
+        height: size,
         colorDark: '#000000',
         colorLight: '#ffffff',
         correctLevel: QRCode.CorrectLevel.H
@@ -364,21 +381,20 @@ elements.moreBtn?.addEventListener('click', async () => {
 
             // Detect browser and show specific instructions
             const userAgent = navigator.userAgent.toLowerCase();
+            const isiOSDevice = /iphone|ipad|ipod/.test(userAgent);
             let message = '';
 
-            if (userAgent.includes('chrome') && !userAgent.includes('edg')) {
+            if (isiOSDevice) {
+                message = '📱 Safari: Tap "Share" (⬆️) → then "Add to Home Screen"';
+            } else if (userAgent.includes('chrome') && !userAgent.includes('edg')) {
                 message = '📱 Chrome: Menu (⋮) → Install app';
             } else if (userAgent.includes('edg')) {
                 message = '📱 Edge: Menu (⋯) → Apps → Install this site as an app';
-            } else if (userAgent.includes('firefox')) {
-                message = '📱 Firefox: Address bar → Install icon';
-            } else if (userAgent.includes('safari')) {
-                message = '📱 Safari: Share → Add to Home Screen';
             } else {
-                message = '📱 Browser menu → Add to Home Screen';
+                message = '📱 Browser menu → Add to Home Screen / Install';
             }
 
-            showToast(message, 5000);
+            showToast(message, 6000);
         }
     }
 });
