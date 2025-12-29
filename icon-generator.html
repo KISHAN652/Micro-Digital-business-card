@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px;
+        }
+
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        #preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>PWA Icon Generator</h1>
+        <p>This tool will generate all required icon sizes from your logo.</p>
+
+        <input type="file" id="logoInput" accept="image/*">
+        <button onclick="generateIcons()">Generate Icons</button>
+
+        <div id="preview"></div>
+    </div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        let logoImage = null;
+
+        document.getElementById('logoInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    logoImage = new Image();
+                    logoImage.onload = () => {
+                        console.log('Logo loaded successfully');
+                    };
+                    logoImage.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function generateIcons() {
+            if (!logoImage) {
+                alert('Please select a logo image first');
+                return;
+            }
+
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+
+                // Fill with black background
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, size, size);
+
+                // Calculate dimensions to fit logo with padding
+                const padding = size * 0.1;
+                const logoSize = size - (padding * 2);
+
+                // Draw logo centered
+                ctx.drawImage(
+                    logoImage,
+                    padding,
+                    padding,
+                    logoSize,
+                    logoSize
+                );
+
+                // Add to preview
+                const wrapper = document.createElement('div');
+                wrapper.style.textAlign = 'center';
+
+                const previewCanvas = canvas.cloneNode();
+                previewCanvas.getContext('2d').drawImage(canvas, 0, 0);
+                previewCanvas.style.width = '100px';
+                previewCanvas.style.height = '100px';
+
+                const label = document.createElement('div');
+                label.textContent = `${size}x${size}`;
+
+                const downloadBtn = document.createElement('button');
+                downloadBtn.textContent = 'Download';
+                downloadBtn.onclick = () => downloadIcon(canvas, size);
+
+                wrapper.appendChild(previewCanvas);
+                wrapper.appendChild(label);
+                wrapper.appendChild(downloadBtn);
+                preview.appendChild(wrapper);
+            });
+        }
+
+        function downloadIcon(canvas, size) {
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+    </script>
+</body>
+
+</html>

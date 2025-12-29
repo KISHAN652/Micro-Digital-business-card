@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Background -->
+    <rect width="192" height="192" fill="url(#grad)"/>
+    
+    <!-- Globe representation -->
+    <circle cx="96" cy="96" r="48" fill="none" stroke="#3b82f6" stroke-width="3.84"/>
+    <ellipse cx="96" cy="96" rx="48" ry="28.799999999999997" fill="none" stroke="#3b82f6" stroke-width="2.88"/>
+    <ellipse cx="96" cy="96" rx="28.799999999999997" ry="48" fill="none" stroke="#3b82f6" stroke-width="2.88"/>
+    <line x1="48" y1="96" x2="144" y2="96" stroke="#3b82f6" stroke-width="2.88"/>
+    
+    <!-- Orbital ring -->
+    <ellipse cx="96" cy="96" rx="67.19999999999999" ry="23.04" fill="none" stroke="#fbbf24" stroke-width="3.84" transform="rotate(-30 96 96)"/>
+    
+    <!-- Text -->
+    <text x="96" y="153.60000000000002" font-family="Arial, sans-serif" font-size="23.04" font-weight="bold" fill="#ffffff" text-anchor="middle">MICRO</text>
+    <text x="96" y="172.8" font-family="Arial, sans-serif" font-size="15.36" fill="#ffffff" text-anchor="middle">SYSTEM</text>
+</svg>

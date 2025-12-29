@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Background -->
+    <rect width="72" height="72" fill="url(#grad)"/>
+    
+    <!-- Globe representation -->
+    <circle cx="36" cy="36" r="18" fill="none" stroke="#3b82f6" stroke-width="1.44"/>
+    <ellipse cx="36" cy="36" rx="18" ry="10.799999999999999" fill="none" stroke="#3b82f6" stroke-width="1.08"/>
+    <ellipse cx="36" cy="36" rx="10.799999999999999" ry="18" fill="none" stroke="#3b82f6" stroke-width="1.08"/>
+    <line x1="18" y1="36" x2="54" y2="36" stroke="#3b82f6" stroke-width="1.08"/>
+    
+    <!-- Orbital ring -->
+    <ellipse cx="36" cy="36" rx="25.2" ry="8.64" fill="none" stroke="#fbbf24" stroke-width="1.44" transform="rotate(-30 36 36)"/>
+    
+    <!-- Text -->
+    <text x="36" y="57.6" font-family="Arial, sans-serif" font-size="8.64" font-weight="bold" fill="#ffffff" text-anchor="middle">MICRO</text>
+    <text x="36" y="64.8" font-family="Arial, sans-serif" font-size="5.76" fill="#ffffff" text-anchor="middle">SYSTEM</text>
+</svg>
